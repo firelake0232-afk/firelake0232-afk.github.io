@@ -6,7 +6,6 @@
 </head>
 <body>
 <div id="root"></div>
-<script src="textures/images.js?v=<?php echo rand(0, 1000); ?>"></script>
 <link href="assets/bootstrap.min.css" rel="stylesheet">
 <style>
   * {
@@ -191,7 +190,7 @@
     return polygonArea(sortedPoints);
   }
 
-  function drawImageRotated(img, x, y, angleDeg, ctx, strokeColor = '#513625', strokeWidth = 2, flip = 0) {
+  function drawImageRotated(ctx, img, x, y, angleDeg,strokeColor, strokeWidth, flip = 0) {
     ctx.save();
 
     const angleRad = angleDeg * Math.PI / 180;
@@ -245,7 +244,7 @@
         const horizontalElementsCount = Math.round(roomWidth / patternWidth) + 1;
 
         for (let col = 0; col < horizontalElementsCount; col++) {
-          const xOffset = col * patternWidth;
+          const xOffset = (patternWidth / 3) + col * patternWidth;
 
           for (let direction = 0; direction < 2; direction++) {
             const angle = direction === 0 ? 45 : -45;
@@ -326,13 +325,14 @@
     for (let i = 0; i < boards.length; i++) {
 
       drawImageRotated(
+      ctx,
       images[getRandomInt(0, images.length - 1)],
       boards[i][0],
       boards[i][1],
       boards[i][2],
-      ctx, '#5C3D29',
-      1,
-      getRandomInt(0, images.length - 1)
+      '#251403',
+      1.25,
+      getRandomInt(0, 2)
       );
 
     }
@@ -363,7 +363,7 @@
     const roomGroupRef = React.useRef(null);
 
     const createFloorTexture = async (boards, w, l) => {
-
+      const base64Images = ['textures/1.jpg', 'textures/2.jpg', 'textures/3.jpg', 'textures/4.jpg', 'textures/5.jpg'];
       const images = await Promise.all(
       base64Images.map(base64 => {
         return new Promise((resolve, reject) => {
@@ -417,7 +417,7 @@
       setFloorArea(area);
 
 
-      let  boards = generatePattern(100, 500, w * 1000, l * 1000, patternRef.current.value);
+      let  boards = generatePattern(127, 635, w * 1000, l * 1000, patternRef.current.value);
       const floorTexture = await createFloorTexture(boards, w, l);
 
       const floorMaterial = new THREE.MeshStandardMaterial({
