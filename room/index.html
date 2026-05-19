@@ -346,20 +346,16 @@
   const RoomGenerator = () => {
 
     const containerRef = React.useRef(null);
-   // const [floorArea, setFloorArea] = React.useState(0);
-
     const sceneRef = React.useRef(null);
     const cameraRef = React.useRef(null);
     const rendererRef = React.useRef(null);
     const controlsRef = React.useRef(null);
     const animationIdRef = React.useRef(null);
-
     const patternRef = React.useRef(null);
     const widthRef = React.useRef(null);
     const lengthRef = React.useRef(null);
     const heightRef = React.useRef(null);
     const infoRef = React.useRef(null);
-
     const roomGroupRef = React.useRef(null);
 
     const createFloorTexture = async (boards, w, l) => {
@@ -374,9 +370,6 @@
         });
       })
       );
-
-
-
 
       const texture = new THREE.CanvasTexture(generateCanvas(w * 1000, l * 1000, images, boards));
       texture.wrapS = THREE.ClampToEdgeWrapping;
@@ -413,8 +406,6 @@
       const h = heightRef.current.value;
 
 
-      const area = w * l;
-      setFloorArea(area);
 
 
       let  boards = generatePattern(127, 635, w * 1000, l * 1000, patternRef.current.value);
